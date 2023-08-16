@@ -48,8 +48,9 @@ class BackendStack(Stack):
             "VisitorCounterAPI",
             rest_api_name="VisitorCounterAPI",
             default_cors_preflight_options={
-                "allow_origins": apigw.Cors.ALL_ORIGINS,
-                "allow_methods": ['POST'],
+                "allow_origins": ['http://localhost:5173', 'http://localhost:4173', 'https://resume.johnkevinlosito.com'],
+                "allow_methods": ['POST', 'OPTIONS'],
+                "allow_credentials": True,
             }
         )
 
@@ -57,6 +58,9 @@ class BackendStack(Stack):
 
         integration_response = apigw.IntegrationResponse(
                 status_code="200",
+                response_parameters={
+                    "method.response.header.Access-Control-Allow-Origin": "'*'",
+                }
             )
 
         response_model = api.add_model("ResponseModel",
@@ -76,6 +80,11 @@ class BackendStack(Stack):
                                             method_responses=[
                                                 apigw.MethodResponse(
                                                     status_code="200",
+                                                    response_parameters={
+                                                        "method.response.header.Access-Control-Allow-Origin": True,
+                                                        "method.response.header.Access-Control-Allow-Credentials": True,
+                                                        "method.response.header.Access-Control-Allow-Methods": True,
+                                                    },
                                                     response_models={
                                                         "application/json": response_model
                                                     }

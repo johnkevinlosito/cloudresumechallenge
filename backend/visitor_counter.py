@@ -21,11 +21,12 @@ def handler(event, context):
     response_object = {
         'visitor_count': int(response['Attributes']['visitor_count'])
     }
+    response_headers = {
+        'Content-Type': 'application/json',
+    },
+
     return {
         'statusCode': 200,
-        'headers': {
-            'Content-Type': 'application/json', 
-            'Access-Control-Allow-Origin': '*'
-        },
+        'headers': response_headers,
         'body': json.dumps(response_object)
     }
