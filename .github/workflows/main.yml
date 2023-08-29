@@ -60,9 +60,9 @@ jobs:
 
       - name: Get bucket name, distribution id and api url
         run: |
-          S3_BUCKET = $(aws cloudformation describe-stacks --stack-name cloudresume-frontend --query "Stacks[0].Outputs[?OutputKey=='CloudresumeBucketName'].OutputValue" --output text)
-          DISTRIBUTION_ID = $(aws cloudformation describe-stacks --stack-name cloudresume-frontend --query "Stacks[0].Outputs[?OutputKey=='CloudresumeCloudfrontDistributionId'].OutputValue" --output text)
-          API_URL = $(aws cloudformation describe-stacks --stack-name cloudresume-backend --query "Stacks[0].Outputs[?OutputKey=='VisitorCounterAPIURL'].OutputValue" --output text)
+          S3_BUCKET=$(aws cloudformation describe-stacks --stack-name cloudresume-frontend --query "Stacks[0].Outputs[?OutputKey=='CloudresumeBucketName'].OutputValue" --output text)
+          DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name cloudresume-frontend --query "Stacks[0].Outputs[?OutputKey=='CloudresumeCloudfrontDistributionId'].OutputValue" --output text)
+          API_URL=$(aws cloudformation describe-stacks --stack-name cloudresume-backend --query "Stacks[0].Outputs[?OutputKey=='VisitorCounterAPIURL'].OutputValue" --output text)
 
           echo "DISTRIBUTION_ID=$DISTRIBUTION_ID" >> $GITHUB_ENV
           echo "S3_BUCKET=$S3_BUCKET" >> $GITHUB_ENV
